@@ -21,7 +21,7 @@ export default class TerminalController {
   #onInputReceived(eventEmitter) {
     return function () {
       const message = this.getValue();
-      console.log(message);
+      eventEmitter.emit(constants.events.app.MESSAGE_SENT, message);
       this.clearValue();
     };
   }
@@ -95,36 +95,5 @@ export default class TerminalController {
 
     components.input.focus();
     components.screen.render();
-
-    setInterval(() => {
-      const users = ["davi_reis"];
-      eventEmitter.emit(constants.events.app.STATUS_UPDATED, users);
-      eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, {
-        message: "Hello Terminal!",
-        userName: "davi_reis",
-      });
-      eventEmitter.emit(constants.events.app.ACTIVITY_UPDATE, "davi_reis join");
-      users.push("tayna_mineiro", "davizinho_kings");
-      eventEmitter.emit(constants.events.app.STATUS_UPDATED, users);
-      eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, {
-        message: "Hello WhatsApp!",
-        userName: "tayna_mineiro",
-      });
-      eventEmitter.emit(
-        constants.events.app.ACTIVITY_UPDATE,
-        "tayna_mineiro left"
-      );
-      users.push("olokinho_silva", "joao_silvaa");
-      eventEmitter.emit(constants.events.app.STATUS_UPDATED, users);
-
-      eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, {
-        message: "Hello People!",
-        userName: "olokinho_silva",
-      });
-      eventEmitter.emit(
-        constants.events.app.ACTIVITY_UPDATE,
-        "olokinho_silva left"
-      );
-    }, 1000);
   }
 }
